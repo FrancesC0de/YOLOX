@@ -10,6 +10,7 @@ from loguru import logger
 import cv2
 
 import torch
+import numpy as np
 
 from yolox.data.data_augment import ValTransform
 from yolox.data.datasets import COCO_CLASSES
@@ -147,7 +148,7 @@ class Predictor(object):
         img = torch.from_numpy(img).unsqueeze(0)
         if self.device == "gpu":
             img = img.cuda()
-
+        
         with torch.no_grad():
             t0 = time.time()
             outputs = self.model(img)
@@ -157,8 +158,9 @@ class Predictor(object):
                 outputs, self.num_classes, self.confthre,
                 self.nmsthre, class_agnostic=True
             )
-            logger.info("Infer time: {:.4f}s".format(time.time() - t0))
-        return outputs, img_info
+            time_diff = time.time() - t0
+            logger.info("Infer time: {:.4f}s".format(time_diff))
+        return outputs, img_info, 1.0 / time_diff
 
     def visual(self, output, img_info, cls_conf=0.35):
         ratio = img_info["ratio"]
@@ -218,11 +220,13 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
     vid_writer = cv2.VideoWriter(
         save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (int(width), int(height))
     )
-    print("fps: ", fps)
+
+    fps_list = []
     while True:
         ret_val, frame = cap.read()
         if ret_val:
-            outputs, img_info = predictor.inference(frame)
+            outputs, img_info, fps_frame = predictor.inference(frame)
+            fps_list.append(fps_frame)
             result_frame = predictor.visual(outputs[0], img_info, predictor.confthre)
             if args.save_result:
                 vid_writer.write(result_frame)
@@ -231,6 +235,7 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
                 break
         else:
             break
+    print("Average fps: ", np.mean(fps_list))
 
 
 def main(exp, args):
