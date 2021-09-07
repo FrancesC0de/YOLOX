@@ -1,6 +1,7 @@
 ## Introduction
 
-This repository contains the code for testing YOLOX-nano on a subset of 10 classes of the Google Open Images Dataset.<br/><br/>
+This repository contains the code for testing YOLOX-nano on a subset of 10 classes of the Google Open Images Dataset.<br/>
+An example of final result:<br/><br/>
 ![Alt Text](https://github.com/FrancesC0de/YOLOX/blob/main/test_veges.gif)
 
 
