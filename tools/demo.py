@@ -218,6 +218,7 @@ def imageflow_demo(predictor, vis_folder, current_time, args):
     vid_writer = cv2.VideoWriter(
         save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (int(width), int(height))
     )
+    print("fps: ", fps)
     while True:
         ret_val, frame = cap.read()
         if ret_val:

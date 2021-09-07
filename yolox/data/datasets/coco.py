@@ -38,11 +38,11 @@ class COCODataset(Dataset):
         """
         super().__init__(img_size)
         if data_dir is None:
-            data_dir = os.path.join(get_yolox_datadir(), "COCO")
-        self.data_dir = data_dir
+            data_dir = "/content/drive/MyDrive/open-images-v4"
+        self.data_dir = "/content/drive/MyDrive/open-images-v4"
         self.json_file = json_file
 
-        self.coco = COCO(os.path.join(self.data_dir, "annotations", self.json_file))
+        self.coco = COCO(os.path.join("/content/drive/MyDrive/YOLOX", self.json_file))
         self.ids = self.coco.getImgIds()
         self.class_ids = sorted(self.coco.getCatIds())
         cats = self.coco.loadCats(self.coco.getCatIds())
@@ -74,7 +74,7 @@ class COCODataset(Dataset):
         )
         max_h = self.img_size[0]
         max_w = self.img_size[1]
-        cache_file = self.data_dir + "/img_resized_cache_" + self.name + ".array"
+        cache_file = self.data_dir + "/img_resized_cache_" + ".array"
         if not os.path.exists(cache_file):
             logger.info(
                 "Caching images for the first time. This might take about 20 minutes for COCO"
@@ -166,7 +166,8 @@ class COCODataset(Dataset):
     def load_image(self, index):
         file_name = self.annotations[index][3]
 
-        img_file = os.path.join(self.data_dir, self.name, file_name)
+        img_file = os.path.join(self.data_dir, file_name)
+        #print(self.data_dir)
 
         img = cv2.imread(img_file)
         assert img is not None

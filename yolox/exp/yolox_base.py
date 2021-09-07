@@ -17,7 +17,7 @@ class Exp(BaseExp):
         super().__init__()
 
         # ---------------- model config ---------------- #
-        self.num_classes = 80
+        self.num_classes = 10
         self.depth = 1.00
         self.width = 1.00
 
@@ -33,11 +33,13 @@ class Exp(BaseExp):
         # self.random_size = (14, 26)
         self.data_dir = None
         self.train_ann = "instances_train2017.json"
-        self.val_ann = "instances_val2017.json"
+        self.val_ann = "test.json"
 
         # --------------- transform config ----------------- #
-        self.mosaic_prob = 1.0
-        self.mixup_prob = 1.0
+        #self.mosaic_prob = 1.0
+        #self.mixup_prob = 1.0
+        self.mosaic_prob = 0
+        self.mixup_prob = 0
         self.hsv_prob = 1.0
         self.flip_prob = 0.5
         self.degrees = 10.0
@@ -50,9 +52,9 @@ class Exp(BaseExp):
 
         # --------------  training config --------------------- #
         self.warmup_epochs = 5
-        self.max_epoch = 300
+        self.max_epoch = 30
         self.warmup_lr = 0
-        self.basic_lr_per_img = 0.01 / 64.0
+        self.basic_lr_per_img = 0.005 / 64.0
         self.scheduler = "yoloxwarmcos"
         self.no_aug_epochs = 15
         self.min_lr_ratio = 0.05
@@ -60,8 +62,8 @@ class Exp(BaseExp):
 
         self.weight_decay = 5e-4
         self.momentum = 0.9
-        self.print_interval = 10
-        self.eval_interval = 10
+        self.print_interval = 300
+        self.eval_interval = 5
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
         # -----------------  testing config ------------------ #
