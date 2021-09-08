@@ -187,8 +187,12 @@ def image_demo(predictor, vis_folder, path, current_time, save_result):
     else:
         files = [path]
     files.sort()
+    #print(files)
+    fps_list = []
     for image_name in files:
-        outputs, img_info = predictor.inference(image_name)
+        #print(image_name)
+        outputs, img_info, fps_image = predictor.inference(image_name)
+        fps_list.append(fps_image)
         result_image = predictor.visual(outputs[0], img_info, predictor.confthre)
         if save_result:
             save_folder = os.path.join(
@@ -201,6 +205,7 @@ def image_demo(predictor, vis_folder, path, current_time, save_result):
         ch = cv2.waitKey(0)
         if ch == 27 or ch == ord("q") or ch == ord("Q"):
             break
+    print("Average fps: ", np.mean(fps_list))
 
 
 def imageflow_demo(predictor, vis_folder, current_time, args):
