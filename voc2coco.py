@@ -18,7 +18,8 @@ START_BOUNDING_BOX_ID = 1
 #  "sheep": 17, "sofa": 18, "train": 19, "tvmonitor": 20}
 
 PRE_DEFINE_CATEGORIES = {"Coffee": 1, "Broccoli": 2, "Sushi": 3, "Pizza": 4, "Egg": 5,
-"Lemon": 6, "Carrot": 7, "Grape": 8, "Banana": 9, "Cucumber": 10}
+"Lemon": 6, "Carrot": 7, "Grape": 8, "Banana": 9, "Cucumber": 10} # new classes
+
 #  "bottle":5, "bus": 6, "car": 7, "cat": 8, "chair": 9,
 #  "cow": 10, "diningtable": 11, "dog": 12, "horse": 13,
 #  "motorbike": 14, "person": 15, "pottedplant": 16,
